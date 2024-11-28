@@ -1,36 +1,104 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+Login System with Next.js, Prisma, and MySQL
+This is a simple login and registration system built using Next.js (App Directory), Prisma ORM, and MySQL. It securely hashes passwords using bcrypt and verifies them during login.
 
-## Getting Started
+Features
+User registration with email and password.
+Password hashing for security using bcrypt.
+Login functionality with hashed password verification.
+Fully functional API built using the Next.js app directory structure.
+Integration with a MySQL database.
+Prerequisites
+Ensure you have the following installed on your system:
 
-First, run the development server:
+Node.js (version 18 or later recommended)
+MySQL database server
+Prisma CLI (npm install prisma --save-dev)
+Installation
 
-```bash
+1. Clone the Repository
+   bash
+   Code kopiëren
+   git clone <repository-url>
+   cd <repository-folder>
+2. Install Dependencies
+   Run the following command to install required dependencies:
+
+bash
+Code kopiëren
+npm install 3. Set Up the Database
+Create a MySQL database named loginsystem (or use your preferred name).
+Update the .env file with your MySQL database credentials:
+makefile
+Code kopiëren
+DATABASE_URL="mysql://username:password@localhost:3306/loginsystem"
+Replace username, password, and loginsystem with your MySQL credentials and database name. 4. Generate Prisma Client
+Run the following command to generate the Prisma client and sync the schema with your database:
+
+bash
+Code kopiëren
+npx prisma generate 5. Apply Database Migrations
+Run the following command to apply migrations to the database:
+
+bash
+Code kopiëren
+npx prisma migrate dev
+Running the Application
+Development Server
+To start the development server, run:
+
+bash
+Code kopiëren
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Open your browser and navigate to http://localhost:3000 to view the app.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+API Endpoints
+Signup - POST /api/signup
+Registers a new user with an email and hashed password.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Request Body:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+json
+Code kopiëren
+{
+"email": "user@example.com",
+"password": "yourpassword"
+}
+Response:
 
-## Learn More
+Success: 201 Created
+Failure: 400 Bad Request or 500 Internal Server Error
+Login - POST /api/signin
+Logs in an existing user by verifying the password.
 
-To learn more about Next.js, take a look at the following resources:
+Request Body:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+json
+Code kopiëren
+{
+"email": "user@example.com",
+"password": "yourpassword"
+}
+Response:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Success: 200 OK
+Failure: 401 Unauthorized or 404 Not Found
+Common Issues & Solutions
+MySQL Connection Errors
+Ensure your MySQL server is running and the credentials in .env are correct.
 
-## Deploy on Vercel
+Prisma Schema Mismatch
+If you change the prisma/schema.prisma file, run the following commands to apply changes:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+bash
+Code kopiëren
+npx prisma generate
+npx prisma migrate dev
+Environment Variables Not Loaded
+Ensure .env exists in the project root and restart the server after making changes.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+FAQ
+Can I use a different database?
+Yes, you can use any database supported by Prisma (e.g., PostgreSQL, SQLite). Update the provider in prisma/schema.prisma and DATABASE_URL in .env.
+
+Is password hashing secure?
+Yes, bcrypt is a robust and widely used library for password hashing.

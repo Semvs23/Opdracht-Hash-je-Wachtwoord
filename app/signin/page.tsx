@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-export default function Home() {
+export default function SignIn() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
@@ -16,8 +16,8 @@ export default function Home() {
       return;
     }
 
-    // Verstuur de registratie-aanroep naar de server
-    const res = await fetch("/api/signup", {
+    // Verstuur de login-aanroep naar de server
+    const res = await fetch("/api/signin", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -31,7 +31,7 @@ export default function Home() {
 
   return (
     <div>
-      <h1>Sign Up</h1>
+      <h1>Sign In</h1>
       <form onSubmit={handleSubmit}>
         <div>
           <input
@@ -51,7 +51,7 @@ export default function Home() {
             required
           />
         </div>
-        <button type="submit">Register</button>
+        <button type="submit">Login</button>
       </form>
       <p>{message}</p>
     </div>
